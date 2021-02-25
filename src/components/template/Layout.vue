@@ -1,24 +1,21 @@
 <template>
   <component :is="component">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-    <v-switch label="layout" v-model="switchLayout"></v-switch>
+    <slot />
   </component>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
 import LayoutDefault from '@/components/template/LayoutDefault.vue'
 import LayoutAuthorized from '@/components/template/LayoutAuthorized.vue'
 
 @Component({
   components: {
-    HelloWorld,
     LayoutDefault,
     LayoutAuthorized,
   },
 })
-export default class Home extends Vue {
+export default class Layout extends Vue {
   switchLayout: boolean = false
   get component() {
     return this.switchLayout ? 'LayoutDefault' : 'LayoutAuthorized'
