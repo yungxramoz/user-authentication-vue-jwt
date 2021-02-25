@@ -1,4 +1,4 @@
-import UserModel from '@/models/UserModel';
+import UserModel from '@/models/data/UserModel'
 
 export default function authHeader() {
   const storedUser = localStorage.getItem('user')

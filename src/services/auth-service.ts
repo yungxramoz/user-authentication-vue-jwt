@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 
-import AuthenticationModel from '@/models/AuthenticateModel'
-import RegistrationModel from '@/models/RegistrationModel'
-import UserModel from '@/models/UserModel'
+import AuthenticationModel from '@/models/data/AuthenticateModel'
+import RegistrationModel from '@/models/data/RegistrationModel'
+import UserModel from '@/models/data/UserModel'
 
 const API_URL = 'https://localhost:44319/api/user/'
 

@@ -1,8 +1,8 @@
-import AuthenticationModel from '@/models/AuthenticateModel'
-import UserModel from '@/models/UserModel'
+import AuthenticationModel from '@/models/data/AuthenticateModel'
+import UserModel from '@/models/data/UserModel'
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import AuthService from '@/services/auth-service'
-import RegistrationModel from '@/models/RegistrationModel'
+import RegistrationModel from '@/models/data/RegistrationModel'
 
 const storedUser = localStorage.getItem('user')
 
