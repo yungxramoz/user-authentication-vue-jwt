@@ -1,22 +1,27 @@
 <template>
   <v-app dark>
-    <router-view />
+    <component :is="component">
+      <router-view />
+      <v-switch label="layout" v-model="switchLayout"></v-switch>
+    </component>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-// import HelloWorld from './components/HelloWorld.vue'
+import { Component, Vue } from 'vue-property-decorator'
+import LayoutDefault from '@/layouts/LayoutDefault.vue'
+import LayoutAuthorized from '@/layouts/LayoutAuthorized.vue'
 
-export default Vue.extend({
-  name: 'App',
-
-  // components: {
-  //   HelloWorld,
-  // },
-
-  data: () => ({
-    //
-  }),
+@Component({
+  components: {
+    LayoutDefault,
+    LayoutAuthorized,
+  },
 })
+export default class App extends Vue {
+  switchLayout: boolean = false
+  get component() {
+    return this.switchLayout ? 'LayoutDefault' : 'LayoutAuthorized'
+  }
+}
 </script>

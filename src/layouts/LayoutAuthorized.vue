@@ -3,7 +3,12 @@
     <yr-app-bar>
       <h1>Loggedin Name</h1>
       <v-spacer></v-spacer>
-      <yr-icon-btn>mdi-logout</yr-icon-btn>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <yr-icon-btn v-bind="attrs" v-on="on" to="/login">mdi-logout</yr-icon-btn>
+        </template>
+        <span>Logout</span>
+      </v-tooltip>
     </yr-app-bar>
 
     <v-main>
@@ -12,7 +17,7 @@
       </v-container>
     </v-main>
 
-    <v-footer app>
+    <v-footer app class="pa-0">
       <v-bottom-navigation v-model="value" :background-color="color" dark shift>
         <v-btn to="/">
           <span>Users</span>

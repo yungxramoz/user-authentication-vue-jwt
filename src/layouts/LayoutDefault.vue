@@ -3,7 +3,12 @@
     <yr-app-bar>
       <h1>Session Master</h1>
       <v-spacer></v-spacer>
-      <yr-icon-btn>mdi-login</yr-icon-btn>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <yr-icon-btn v-bind="attrs" v-on="on" to="/login">mdi-login</yr-icon-btn>
+        </template>
+        <span>Login</span>
+      </v-tooltip>
     </yr-app-bar>
 
     <v-main>
