@@ -2,7 +2,7 @@
   <v-app dark>
     <component :is="component">
       <router-view />
-      <v-switch label="layout" v-model="switchLayout"></v-switch>
+      <v-switch label="logged in" v-model="switchLayout"></v-switch>
     </component>
   </v-app>
 </template>
@@ -21,7 +21,7 @@ import LayoutAuthorized from '@/layouts/LayoutAuthorized.vue'
 export default class App extends Vue {
   switchLayout: boolean = false
   get component() {
-    return this.switchLayout ? 'LayoutDefault' : 'LayoutAuthorized'
+    return this.switchLayout ? 'LayoutAuthorized' : 'LayoutDefault'
   }
 }
 </script>

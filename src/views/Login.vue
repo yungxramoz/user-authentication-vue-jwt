@@ -12,6 +12,7 @@
           v-model="form.fields.password"
           label="Password"
           required
+          @keyup.enter="login"
         ></yr-password-field>
         <div class="text-center">
           <yr-btn width="180px" @click="login">Login</yr-btn>
@@ -22,8 +23,9 @@
     <template #footer>
       <v-spacer></v-spacer>
       <span class="caption"
-        >Don't have an account yet? <nuxt-link to="/registration">Sign up here</nuxt-link>.
+        >Don't have an account yet? <router-link to="/signup">Sign up here</router-link>.
       </span>
+      <v-spacer></v-spacer>
     </template>
   </yr-form>
 </template>
@@ -55,6 +57,12 @@ export default class Login extends Vue {
       username: '',
       password: '',
     } as AuthenticateModel,
+  }
+
+  login() {
+    if (this.form.valid) {
+      console.log(`Login with Username: ${this.form.fields.username} ${this.form.fields.password}`)
+    }
   }
 }
 </script>
