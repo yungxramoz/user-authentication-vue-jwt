@@ -151,7 +151,8 @@ export default class Registration extends Vue {
     if (this.signupForm.validate()) {
       await this.auth.register(this.form.fields).then(
         () => {
-          this.$router.push('/')
+          this.$router.push('/users')
+          return
         },
         error => {
           this.message = error
