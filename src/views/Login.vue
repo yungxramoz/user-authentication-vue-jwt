@@ -1,5 +1,5 @@
 <template>
-  <yr-form title="Login">
+  <yr-form title="Login" :message="message" :messageType="messageType">
     <template #form>
       <v-form ref="loginForm" v-model="form.valid" lazy-validation>
         <yr-text-field
@@ -30,12 +30,6 @@
         >Don't have an account yet? <router-link to="/signup">Sign up here</router-link>.
       </span>
       <v-spacer></v-spacer>
-
-      <v-bottom-sheet v-model="hasMessage" hide-overlay
-        ><v-alert class="ma-0 pa-7" border="top" type="error" prominent>
-          {{ message }}
-        </v-alert></v-bottom-sheet
-      >
     </template>
   </yr-form>
 </template>
@@ -43,16 +37,17 @@
 <script lang="ts">
 import { Component, Ref, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import { InputValidationRule } from 'vuetify'
 
 import AuthModule from '@/store/modules/auth-module'
+
+import { requiredRule } from '@/helpers/form-rules'
 
 import { VForm } from '@/models/types'
 import FormDefinition from '@/models/form-definition'
 import AuthenticateModel from '@/models/data/AuthenticateModel'
 
 import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
-import { InputValidationRule } from 'vuetify'
-import { requiredRule } from '@/helpers/form-rules'
 
 interface Form extends FormDefinition {
   valid: false
@@ -86,17 +81,11 @@ export default class Login extends Vue {
     },
   }
   private loading: boolean = false
-  private message?: string
-  private hasMessage?: boolean
-  private auth: AuthModule
-
-  constructor() {
-    super()
-    this.auth = getModule(AuthModule, this.$store)
-  }
+  private message?: string = ''
+  private messageType?: string = 'info'
+  private auth: AuthModule = getModule(AuthModule, this.$store)
 
   async login() {
-    let hasError = false
     this.loading = true
 
     if (this.loginForm.validate()) {
@@ -106,11 +95,10 @@ export default class Login extends Vue {
         },
         error => {
           this.message = error
-          hasError = true
+          this.messageType = 'error'
         }
       )
     }
-    this.hasMessage = hasError
     this.loading = false
   }
 }
