@@ -4,7 +4,7 @@ export function requiredRule(message = 'This field is required'): (value: any) =
 
 export function passwordRule(message = 'Password to weak'): (value: any) => boolean | string {
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-  return value => value.match(passwordRegex) || message
+  return value => passwordRegex.test(value) || message
 }
 
 export function minCharRule(
