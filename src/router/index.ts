@@ -5,6 +5,10 @@ import AuthModule from '@/store/modules/auth-module'
 import store from '@/store'
 import { getModule } from 'vuex-module-decorators'
 
+import Home from '@/views/Home.vue'
+import Signup from '@/views/Signup.vue'
+import Login from '@/views/Login.vue'
+
 let auth: AuthModule = getModule(AuthModule, store)
 
 Vue.use(VueRouter)
@@ -13,12 +17,12 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Home.vue'),
+    component: Home,
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue'),
+    component: Login,
     meta: {
       guest: true,
     },
@@ -26,7 +30,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/signup',
     name: 'Signup',
-    component: () => import('../views/Signup.vue'),
+    component: Signup,
     meta: {
       guets: true,
     },
