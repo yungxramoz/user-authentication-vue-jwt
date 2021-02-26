@@ -15,7 +15,6 @@
             </v-row> </template
         ></v-img>
       </router-link>
-      <h1>{{ fullname }}</h1>
       <v-spacer></v-spacer>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -66,10 +65,6 @@ export default class LayoutDefault extends Vue {
   constructor() {
     super()
     this.auth = getModule(AuthModule, this.$store)
-  }
-
-  get fullname() {
-    return this.auth.fullname
   }
 
   logout() {
