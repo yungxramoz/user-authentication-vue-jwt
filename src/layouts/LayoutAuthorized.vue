@@ -1,11 +1,11 @@
 <template>
   <div class="LayoutAuthorized">
     <yr-app-bar>
-      <h1>Loggedin Name</h1>
+      <h1>{{ fullname }}</h1>
       <v-spacer></v-spacer>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
-          <yr-icon-btn v-bind="attrs" v-on="on">mdi-logout</yr-icon-btn>
+          <yr-icon-btn v-bind="attrs" v-on="on" @click="logout">mdi-logout</yr-icon-btn>
         </template>
         <span>Logout</span>
       </v-tooltip>
@@ -34,6 +34,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+
+import AuthModule from '@/store/modules/auth-module'
+
 import { YrAppBar, YrIconBtn } from '@/components'
 
 @Component({
@@ -42,5 +46,20 @@ import { YrAppBar, YrIconBtn } from '@/components'
     YrIconBtn,
   },
 })
-export default class LayoutDefault extends Vue {}
+export default class LayoutDefault extends Vue {
+  private auth: AuthModule
+
+  constructor() {
+    super()
+    this.auth = getModule(AuthModule, this.$store)
+  }
+
+  get fullname() {
+    return this.auth.fullname
+  }
+
+  logout() {
+    this.auth.logout()
+  }
+}
 </script>
