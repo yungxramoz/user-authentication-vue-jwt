@@ -5,6 +5,8 @@ import UserService from '@/services/user-service'
 import UserModel from '@/models/data/UserModel'
 import AccountState from '@/models/state/account-state'
 
+import { promiseErrorHandler } from '@/helpers/promise-error-handler'
+
 @Module({ namespaced: true, name: 'account' })
 class AccountModule extends VuexModule {
   public accountState: AccountState = {
@@ -21,6 +23,14 @@ class AccountModule extends VuexModule {
     this.accountState.accountData = null
   }
 
+  @Mutation
+  public deleteUserSuccess(): void {
+    this.accountState.accountData = null
+  }
+
+  @Mutation
+  public deleteUserFailure(): void {}
+
   @Action({ rawError: true })
   public fetchUser(id: number): Promise<any> {
     return UserService.getUser(id).then(
@@ -29,13 +39,20 @@ class AccountModule extends VuexModule {
         return Promise.resolve(user)
       },
       error => {
-        this.fetchUserFailure()
-        const message =
-          (error.response && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString()
+        return promiseErrorHandler(error, this.fetchUserFailure)
+      }
+    )
+  }
 
-        return Promise.reject(message)
+  @Action({ rawError: true })
+  public deleteUser(id: number): Promise<any> {
+    return UserService.deleteUser(id).then(
+      response => {
+        this.deleteUserSuccess()
+        return Promise.resolve(response.data)
+      },
+      error => {
+        return promiseErrorHandler(error, this.deleteUserFailure)
       }
     )
   }

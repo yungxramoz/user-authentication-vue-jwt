@@ -29,6 +29,10 @@ class UaserService {
   updateUser(id: number, updateData: UpdateUserModel) {
     return axios.put(`${API_URL}${id}`, { data: updateData, headers: authHeader() })
   }
+
+  deleteUser(id: number) {
+    return axios.delete(`${API_URL}${id}`, { headers: authHeader() })
+  }
 }
 
 export default new UaserService()

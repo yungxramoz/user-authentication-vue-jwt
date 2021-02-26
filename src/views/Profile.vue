@@ -28,8 +28,38 @@
         ></yr-text-field>
         <v-row>
           <v-col class="text-right">
-            <yr-btn color="error" class="mr-4"> Delete Profile</yr-btn>
-            <yr-btn :disabled="!updateEnabled || loading" @click="updateUser" :loading="loading">
+            <v-dialog v-model="deleteDialog" max-width="500px" :persistent="deleteLoading">
+              <template v-slot:activator="{ on, attrs }">
+                <yr-btn color="error" class="mr-4" v-bind="attrs" v-on="on">
+                  Delete Profile
+                </yr-btn>
+              </template>
+              <v-card>
+                <v-card-title class="headline">
+                  Delete Action
+                </v-card-title>
+                <v-card-text>
+                  Are you sure you want to delete Your Profile?
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <yr-btn text :disabled="deleteLoading" @click="deleteDialog = false">
+                    Cancel
+                  </yr-btn>
+                  <yr-btn
+                    color="error"
+                    :disabled="deleteLoading"
+                    :loading="deleteLoading"
+                    text
+                    @click="deleteAct"
+                  >
+                    Delete
+                  </yr-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <yr-btn :disabled="!updateEnabled" @click="update" :updateLoading="updateLoading">
               Update
             </yr-btn>
           </v-col>
@@ -56,7 +86,6 @@ import UserModel from '@/models/data/UserModel'
 import FormDefinition from '@/models/form-definition'
 
 import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
-import UserModule from '@/store/modules/user-module'
 
 interface Form extends FormDefinition {
   valid: false
@@ -90,9 +119,12 @@ export default class Registration extends Vue {
     },
   }
   private storedProfile?: UserModel
-  private loading: boolean = false
+  private updateLoading: boolean = false
+  private deleteLoading: boolean = false
+  private deleteDialog: boolean = false
   private message?: string = ''
   private messageType?: string = 'info'
+
   private auth: AuthModule = getModule(AuthModule, this.$store)
   private account: AccountModule = getModule(AccountModule, this.$store)
 
@@ -115,12 +147,13 @@ export default class Registration extends Vue {
       (this.form.fields.username != this.account.currentUser.username ||
         this.form.fields.firstname != this.account.currentUser.firstname ||
         this.form.fields.lastname != this.account.currentUser.lastname) &&
-      this.form.valid
+      this.form.valid &&
+      !this.updateLoading
     )
   }
 
   async update() {
-    this.loading = true
+    this.updateLoading = true
 
     // if (this.profileForm.validate() && this.updateEnabled) {
     //   await this.auth.update(this.form.fields).then(
@@ -133,7 +166,23 @@ export default class Registration extends Vue {
     //     }
     //   )
     // }
-    this.loading = false
+    this.updateLoading = false
+  }
+
+  async deleteAct() {
+    this.deleteLoading = true
+    await this.account.deleteUser(this.auth.userId).then(
+      () => {
+        this.auth.logout()
+        this.$router.push('/')
+      },
+      error => {
+        this.message = error
+        this.messageType = 'error'
+      }
+    )
+
+    this.deleteLoading = false
   }
 }
 </script>
