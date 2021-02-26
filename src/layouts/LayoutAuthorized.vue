@@ -69,7 +69,7 @@ export default class LayoutDefault extends Vue {
 
   logout() {
     this.auth.logout()
-    this.$router.push('/login')
+    this.$router.push('/')
   }
 }
 </script>
