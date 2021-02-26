@@ -18,7 +18,7 @@
     </v-main>
 
     <v-footer app class="pa-0">
-      <v-bottom-navigation v-model="value" :background-color="color" dark shift>
+      <v-bottom-navigation shift>
         <v-btn to="/">
           <span>Users</span>
           <v-icon>mdi-account-group</v-icon>
@@ -60,6 +60,7 @@ export default class LayoutDefault extends Vue {
 
   logout() {
     this.auth.logout()
+    this.$router.push('/login')
   }
 }
 </script>
