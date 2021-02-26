@@ -1,7 +1,20 @@
 <template>
   <div class="LayoutDefault">
     <yr-app-bar>
-      <h1>Session Master</h1>
+      <router-link to="/">
+        <v-img
+          contain
+          max-height="50"
+          max-width="55"
+          src="../assets/sm-header.png"
+          lazy-src="../assets/sm-header.png"
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+            </v-row> </template
+        ></v-img>
+      </router-link>
       <v-spacer></v-spacer>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">

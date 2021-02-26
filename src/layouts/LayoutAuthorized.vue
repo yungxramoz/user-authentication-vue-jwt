@@ -1,6 +1,20 @@
 <template>
   <div class="LayoutAuthorized">
     <yr-app-bar>
+      <router-link to="/" class="mr-2">
+        <v-img
+          contain
+          max-height="50"
+          max-width="55"
+          src="../assets/sm-header.png"
+          lazy-src="../assets/sm-header.png"
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+            </v-row> </template
+        ></v-img>
+      </router-link>
       <h1>{{ fullname }}</h1>
       <v-spacer></v-spacer>
       <v-tooltip left>
