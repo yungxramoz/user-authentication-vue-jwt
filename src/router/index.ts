@@ -14,16 +14,13 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: () => import('../views/Home.vue'),
-    meta: {
-      requiresAuth: false,
-    },
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue'),
     meta: {
-      requiresAuth: false,
+      guest: true,
     },
   },
   {
@@ -31,7 +28,7 @@ const routes: Array<RouteConfig> = [
     name: 'Signup',
     component: () => import('../views/Signup.vue'),
     meta: {
-      requiresAuth: false,
+      guets: true,
     },
   },
   {
@@ -54,6 +51,12 @@ router.beforeEach((to, _from, next) => {
       next()
     } else {
       next('/login')
+    }
+  } else if (to.matched.some(record => record.meta.guest)) {
+    if (!auth.isLoggedIn) {
+      next()
+    } else {
+      next('/users')
     }
   } else {
     next()
