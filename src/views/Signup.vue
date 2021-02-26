@@ -1,7 +1,7 @@
 <template>
   <yr-form title="Create new Account">
     <template #form>
-      <v-form lazy-validation v-model="form.valid">
+      <v-form ref="signupForm" v-model="form.valid" lazy-validation>
         <yr-text-field
           v-model="form.fields.firstname"
           name="firsname"
@@ -51,7 +51,13 @@
         >
         </yr-password-field>
         <div class="text-center">
-          <yr-btn type="submit" width="180px" :disabled="!form.valid">
+          <yr-btn
+            type="submit"
+            width="180px"
+            :disabled="!form.valid || loading"
+            :loading="loading"
+            @click="register"
+          >
             Sign up
           </yr-btn>
         </div>
@@ -69,29 +75,31 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Ref, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import { InputValidationRule } from 'vuetify'
 
+import AuthModule from '@/store/modules/auth-module'
+
+import { maxCharRule, minCharRule, passwordRule, requiredRule } from '@/helpers/form-rules'
+
+import { VForm } from '@/models/types'
 import RegistrationModel from '@/models/data/RegistrationModel'
 import FormDefinition from '@/models/form-definition'
-import { maxCharRule, minCharRule, passwordRule, requiredRule } from '@/helpers/form-rules'
 
 import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
 
 interface Form extends FormDefinition {
   valid: false
-  fields: {
-    firstname: string
-    lastname: string
-    username: string
-    password: string
+  fields: RegistrationModel & {
     confirmPassword: string
   }
   rules?: {
-    firstname: ((message?: string) => {})[]
-    lastname: ((message?: string) => {})[]
-    username: ((message?: string) => {})[]
-    password: ((message?: string) => {})[]
-    confirmPassword: ((message?: string) => {})[]
+    firstname: InputValidationRule[]
+    lastname: InputValidationRule[]
+    username: InputValidationRule[]
+    password: InputValidationRule[]
+    confirmPassword: InputValidationRule[]
   }
 }
 
@@ -104,7 +112,9 @@ interface Form extends FormDefinition {
   },
 })
 export default class Registration extends Vue {
-  form: Form = {
+  @Ref('signupForm') readonly signupForm!: VForm
+
+  private form: Form = {
     valid: false,
     fields: {
       firstname: '',
@@ -114,6 +124,10 @@ export default class Registration extends Vue {
       confirmPassword: '',
     },
   }
+  private loading: boolean = false
+  private message?: string = ''
+  private messageType?: string = 'info'
+  private auth: AuthModule = getModule(AuthModule, this.$store)
 
   beforeMount() {
     this.form.rules = {
@@ -129,6 +143,23 @@ export default class Registration extends Vue {
   get passwordConfirmCustRule() {
     return () =>
       this.form.fields.password === this.form.fields.confirmPassword || 'Password must match'
+  }
+
+  async register() {
+    this.loading = true
+
+    if (this.signupForm.validate()) {
+      await this.auth.register(this.form.fields).then(
+        () => {
+          this.$router.push('/')
+        },
+        error => {
+          this.message = error
+          this.messageType = 'error'
+        }
+      )
+    }
+    this.loading = false
   }
 }
 </script>

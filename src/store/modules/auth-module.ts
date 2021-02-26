@@ -71,6 +71,9 @@ class AuthModule extends VuexModule {
     return AuthService.register(data).then(
       response => {
         this.registerSuccess()
+        const username = data.username
+        const password = data.password
+        this.login({ username, password })
         return Promise.resolve(response.data)
       },
       error => {
