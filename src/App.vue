@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <component :is="layout">
-      <router-view />
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
     </component>
   </v-app>
 </template>
@@ -34,3 +36,15 @@ export default class App extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(1em);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.4s ease;
+}
+</style>

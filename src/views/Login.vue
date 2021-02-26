@@ -91,7 +91,7 @@ export default class Login extends Vue {
     if (this.loginForm.validate()) {
       await this.auth.login(this.form.fields).then(
         () => {
-          this.$router.push('/')
+          this.$router.push('/users')
         },
         error => {
           this.message = error
