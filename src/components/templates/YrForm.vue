@@ -15,7 +15,7 @@
       </v-row>
     </div>
 
-    <v-bottom-sheet v-model="hasMessage" hide-overlay
+    <v-bottom-sheet :value="hasMessage" hide-overlay
       ><v-alert class="ma-0 pa-7" border="top" :type="messageType" prominent>
         {{ message }}
       </v-alert>
