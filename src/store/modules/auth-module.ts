@@ -1,42 +1,44 @@
+import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
+
+import AuthService from '@/services/auth-service'
+
 import AuthenticationModel from '@/models/data/AuthenticateModel'
 import UserModel from '@/models/data/UserModel'
-import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
-import AuthService from '@/services/auth-service'
 import RegistrationModel from '@/models/data/RegistrationModel'
 
 const storedUser = localStorage.getItem('user')
 
-@Module({ namespaced: true })
-class User extends VuexModule {
-  public status = storedUser ? { loggedIn: true } : { loggedId: false }
+@Module({ namespaced: true, name: 'auth' })
+class AuthModule extends VuexModule {
+  public status = storedUser ? { loggedIn: true } : { loggedIn: false }
   public user: UserModel | null = storedUser ? JSON.parse(storedUser) : null
 
   @Mutation
   public loginSuccess(user: UserModel): void {
-    this.status.loggedId = true
+    this.status.loggedIn = true
     this.user = user
   }
 
   @Mutation
   public loginFailure(): void {
-    this.status.loggedId = false
+    this.status.loggedIn = false
     this.user = null
   }
 
   @Mutation
   public logoutSuccess(): void {
-    this.status.loggedId = false
+    this.status.loggedIn = false
     this.user = null
   }
 
   @Mutation
   public registerSuccess(): void {
-    this.status.loggedId = false
+    this.status.loggedIn = false
   }
 
   @Mutation
   public registerFailure(): void {
-    this.status.loggedId = false
+    this.status.loggedIn = false
   }
 
   @Action({ rawError: true })
@@ -83,8 +85,12 @@ class User extends VuexModule {
   }
 
   get isLoggedIn(): boolean {
-    const loggedIn = this.status.loggedId
+    const loggedIn = this.status.loggedIn
     return loggedIn ? loggedIn : false
   }
+
+  get fullname(): string {
+    return `${this.user?.firstname} ${this.user?.lastname}`
+  }
 }
-export default User
+export default AuthModule

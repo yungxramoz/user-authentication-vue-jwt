@@ -1,14 +1,17 @@
 <template>
   <v-app dark>
-    <component :is="component">
+    <component :is="layout">
       <router-view />
-      <v-switch label="logged in" v-model="switchLayout"></v-switch>
     </component>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+
+import AuthModule from '@/store/modules/auth-module'
+
 import LayoutDefault from '@/layouts/LayoutDefault.vue'
 import LayoutAuthorized from '@/layouts/LayoutAuthorized.vue'
 
@@ -19,9 +22,15 @@ import LayoutAuthorized from '@/layouts/LayoutAuthorized.vue'
   },
 })
 export default class App extends Vue {
-  switchLayout: boolean = false
-  get component() {
-    return this.switchLayout ? 'LayoutAuthorized' : 'LayoutDefault'
+  private auth: AuthModule
+
+  constructor() {
+    super()
+    this.auth = getModule(AuthModule, this.$store)
+  }
+
+  get layout() {
+    return this.auth.isLoggedIn ? 'LayoutAuthorized' : 'LayoutDefault'
   }
 }
 </script>
