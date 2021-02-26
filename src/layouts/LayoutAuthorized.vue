@@ -19,11 +19,11 @@
 
     <v-footer app class="pa-0">
       <v-bottom-navigation shift>
-        <v-btn to="/">
+        <v-btn to="users">
           <span>Users</span>
           <v-icon>mdi-account-group</v-icon>
         </v-btn>
-        <v-btn to="about">
+        <v-btn to="profile">
           <span>Profile</span>
           <v-icon>mdi-account</v-icon>
         </v-btn>
