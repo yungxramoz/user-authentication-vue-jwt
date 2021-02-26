@@ -26,7 +26,7 @@ class UaserService {
       })
   }
 
-  updateUser(id: string, updateData: UpdateUserModel) {
+  updateUser(id: number, updateData: UpdateUserModel) {
     return axios.put(`${API_URL}${id}`, { data: updateData, headers: authHeader() })
   }
 }
