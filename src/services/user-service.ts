@@ -18,7 +18,7 @@ class UaserService {
       })
   }
 
-  getUser(id: string): Promise<UserModel> {
+  getUser(id: number): Promise<UserModel> {
     return axios
       .get(`${API_URL}${id}`, { headers: authHeader() })
       .then((response: AxiosResponse<UserModel>) => {

@@ -40,12 +40,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Ref, Vue } from 'vue-property-decorator'
+import { Component, Ref, Vue, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { InputValidationRule } from 'vuetify'
 
-import UserModule from '@/store/modules/user-module'
 import AuthModule from '@/store/modules/auth-module'
+import AccountModule from '@/store/modules/account-module'
 
 import { maxCharRule, minCharRule, passwordRule, requiredRule } from '@/helpers/form-rules'
 import { cloneSource } from '@/helpers/clone'
@@ -56,6 +56,7 @@ import UserModel from '@/models/data/UserModel'
 import FormDefinition from '@/models/form-definition'
 
 import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
+import UserModule from '@/store/modules/user-module'
 
 interface Form extends FormDefinition {
   valid: false
@@ -88,13 +89,15 @@ export default class Registration extends Vue {
       password: '',
     },
   }
+  private storedProfile?: UserModel
   private loading: boolean = false
   private message?: string = ''
   private messageType?: string = 'info'
   private auth: AuthModule = getModule(AuthModule, this.$store)
-  private user: UserModule = getModule(UserModule, this.$store)
+  private account: AccountModule = getModule(AccountModule, this.$store)
 
-  beforeMount() {
+  created() {
+    this.account.fetchUser(this.auth.userId)
     this.form.rules = {
       firstname: [requiredRule(), maxCharRule(50)],
       lastname: [requiredRule(), maxCharRule(50)],
@@ -103,8 +106,17 @@ export default class Registration extends Vue {
     }
   }
 
-  mounted() {
-    this.form.fields = cloneSource(this.profileData) as UserModel
+  get profileData() {
+    return this.account.currentUser as UserModel
+  }
+
+  get updateEnabled(): boolean {
+    return (
+      (this.form.fields.username != this.account.currentUser.username ||
+        this.form.fields.firstname != this.account.currentUser.firstname ||
+        this.form.fields.lastname != this.account.currentUser.lastname) &&
+      this.form.valid
+    )
   }
 
   async update() {
@@ -122,20 +134,6 @@ export default class Registration extends Vue {
     //   )
     // }
     this.loading = false
-  }
-
-  get profileData(): UserModel {
-    const user = this.auth.user
-    return user ? user : ({} as UserModel)
-  }
-
-  get updateEnabled(): boolean {
-    return (
-      (this.form.fields.username != this.profileData.username ||
-        this.form.fields.firstname != this.profileData.firstname ||
-        this.form.fields.lastname != this.profileData.lastname) &&
-      this.form.valid
-    )
   }
 }
 </script>

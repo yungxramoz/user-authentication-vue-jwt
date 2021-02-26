@@ -5,40 +5,50 @@ import AuthService from '@/services/auth-service'
 import AuthenticationModel from '@/models/data/AuthenticateModel'
 import UserModel from '@/models/data/UserModel'
 import RegistrationModel from '@/models/data/RegistrationModel'
+import { AuthState } from '@/models/state/auth-state'
+
+import { promiseErrorHandler } from '@/helpers/promise-error-handler'
 
 const storedUser = localStorage.getItem('user')
+const userId = localStorage.getItem('userId')
+const accessToken = localStorage.getItem('accessToken')
 
 @Module({ namespaced: true, name: 'auth' })
 class AuthModule extends VuexModule {
-  public status = storedUser ? { loggedIn: true } : { loggedIn: false }
   public user: UserModel | null = storedUser ? JSON.parse(storedUser) : null
+
+  public authState: AuthState = {
+    loggedIn: accessToken && userId ? true : false,
+    userId: userId ? JSON.parse(userId) : null,
+    accessToken: accessToken ? JSON.parse(accessToken) : null,
+  }
 
   @Mutation
   public loginSuccess(user: UserModel): void {
-    this.status.loggedIn = true
-    this.user = user
+    this.authState.loggedIn = true
+    this.authState.userId = user.userId
   }
 
   @Mutation
   public loginFailure(): void {
-    this.status.loggedIn = false
-    this.user = null
+    this.authState.loggedIn = false
+    this.authState.userId = null
   }
 
   @Mutation
   public logoutSuccess(): void {
-    this.status.loggedIn = false
-    this.user = null
+    this.authState.loggedIn = false
+    this.authState.userId = null
   }
 
   @Mutation
   public registerSuccess(): void {
-    this.status.loggedIn = false
+    this.authState.loggedIn = false
   }
 
   @Mutation
   public registerFailure(): void {
-    this.status.loggedIn = false
+    this.authState.loggedIn = false
   }
 
   @Action({ rawError: true })
@@ -49,13 +59,7 @@ class AuthModule extends VuexModule {
         return Promise.resolve(user)
       },
       error => {
-        this.loginFailure()
-        const message =
-          (error.response && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString()
-
-        return Promise.reject(message)
+        return promiseErrorHandler(error, this.loginFailure)
       }
     )
   }
@@ -67,33 +71,35 @@ class AuthModule extends VuexModule {
   }
 
   @Action({ rawError: true })
-  public register(data: RegistrationModel): Promise<any> {
+  public async register(data: RegistrationModel): Promise<any> {
     return AuthService.register(data).then(
-      response => {
+      () => {
         this.registerSuccess()
         const username = data.username
         const password = data.password
-        this.login({ username, password })
-        return Promise.resolve(response.data)
+        return this.login({ username, password }).then(
+          response => {
+            return Promise.resolve(response.data)
+          },
+          error => {
+            return promiseErrorHandler(error, this.loginFailure)
+          }
+        )
       },
       error => {
-        this.registerFailure()
-        const message =
-          (error.response && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString()
-        return Promise.reject(message)
+        return promiseErrorHandler(error, this.registerFailure)
       }
     )
   }
 
   get isLoggedIn(): boolean {
-    const loggedIn = this.status.loggedIn
+    const loggedIn = this.authState.loggedIn
     return loggedIn ? loggedIn : false
   }
 
-  get fullname(): string {
-    return `${this.user?.firstname} ${this.user?.lastname}`
+  get userId(): number {
+    const id = this.authState.userId
+    return id ? id : -1
   }
 }
 export default AuthModule

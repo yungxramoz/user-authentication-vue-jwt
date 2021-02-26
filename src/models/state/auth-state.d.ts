@@ -1,5 +1,5 @@
 export default interface AuthState {
-  loggedIn: boolena
+  loggedIn: boolean
   userId: number | null
   accessToken: string | null
 }

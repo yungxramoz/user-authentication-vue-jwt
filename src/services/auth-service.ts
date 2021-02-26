@@ -13,6 +13,8 @@ class AuthService {
       .then((response: AxiosResponse<UserModel>) => {
         if (response.data.token) {
           localStorage.setItem('user', JSON.stringify(response.data))
+          localStorage.setItem('userId', JSON.stringify(response.data.userId))
+          localStorage.setItem('accessToken', JSON.stringify(response.data.token))
         }
 
         return response.data
@@ -21,6 +23,8 @@ class AuthService {
 
   logout(): void {
     localStorage.removeItem('user')
+    localStorage.removeItem('userId')
+    localStorage.removeItem('accessToken')
   }
 
   register(registerData: RegistrationModel) {

@@ -1,11 +1,11 @@
 import UserModel from '@/models/data/UserModel'
 
 export default function authHeader() {
-  const storedUser = localStorage.getItem('user')
-  let user = JSON.parse(storedUser ? storedUser : '') as UserModel
+  const storedAccessToken = localStorage.getItem('accessToken')
+  let accessToken = JSON.parse(storedAccessToken ? storedAccessToken : '') as string
 
-  if (user && user.token) {
-    return { Authorization: `Bearer ${user.token}` }
+  if (accessToken) {
+    return { Authorization: `Bearer ${accessToken}` }
   } else {
     return {}
   }
