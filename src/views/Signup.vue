@@ -101,7 +101,7 @@ interface Form extends FormDefinition {
     YrForm,
   },
 })
-export default class Registration extends Vue {
+export default class Signup extends Vue {
   @Ref('signupForm') readonly signupForm!: VForm
 
   private form: Form = {
