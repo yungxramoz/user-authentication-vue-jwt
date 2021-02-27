@@ -1,7 +1,12 @@
 <template>
   <yr-form title="Profile" :message="message" :messageType="messageType">
     <template #form>
-      <v-form lazy-validation v-model="form.valid" :disabled="updateLoading || deleteLoading">
+      <v-form
+        ref="profileForm"
+        v-model="form.valid"
+        lazy-validation
+        :disabled="updateLoading || deleteLoading"
+      >
         <yr-text-field
           v-model="form.fields.firstname"
           label="Firstname"
@@ -28,7 +33,12 @@
         ></yr-text-field>
         <v-row>
           <v-col class="text-right">
-            <v-dialog v-model="deleteDialog" max-width="500px" :persistent="deleteLoading">
+            <v-dialog
+              v-model="deleteDialog"
+              max-width="500px"
+              :persistent="deleteLoading"
+              retain-focus
+            >
               <template v-slot:activator="{ on, attrs }">
                 <yr-btn
                   color="error"
@@ -66,7 +76,7 @@
               </v-card>
             </v-dialog>
 
-            <yr-btn :disabled="!updateEnabled" @click="update" :loading="updateLoading">
+            <yr-btn :disabled="!updateEnabled" :loading="updateLoading" @click="update">
               Update
             </yr-btn>
           </v-col>
@@ -85,10 +95,10 @@ import AuthModule from '@/store/modules/auth-module'
 import AccountModule from '@/store/modules/account-module'
 
 import { maxCharRule, minCharRule, passwordRule, requiredRule } from '@/helpers/form-rules'
+import { cloneSource } from '@/helpers/clone'
 
 import { VForm } from '@/models/types'
-import UpdateUserModel from '@/models/data/UpdateUserModel'
-import UserModel from '@/models/data/UserModel'
+import { UpdateUserModel, UserModel } from '@/models/data'
 import FormDefinition from '@/models/form-definition'
 
 import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
@@ -112,7 +122,7 @@ interface Form extends FormDefinition {
     YrForm,
   },
 })
-export default class Registration extends Vue {
+export default class Profile extends Vue {
   @Ref('profileForm') readonly profileForm!: VForm
 
   private form: Form = {
@@ -124,7 +134,6 @@ export default class Registration extends Vue {
       password: '',
     },
   }
-  private storedProfile?: UserModel
   private updateLoading: boolean = false
   private deleteLoading: boolean = false
   private deleteDialog: boolean = false
@@ -141,13 +150,14 @@ export default class Registration extends Vue {
       username: [requiredRule(), maxCharRule(20)],
       password: [requiredRule(), minCharRule(8), passwordRule()],
     }
+
     this.updateLoading = true
 
     this.account
-      .fetchUser(this.auth.userId)
+      .fetch(this.auth.userId)
       .then(
         (response: UserModel) => {
-          this.form.fields = response
+          this.form.fields = cloneSource(response)
         },
         error => {
           this.message = error
@@ -170,36 +180,49 @@ export default class Registration extends Vue {
   }
 
   async update() {
-    this.updateLoading = true
+    if (this.profileForm.validate()) {
+      this.updateLoading = true
 
-    // if (this.profileForm.validate() && this.updateEnabled) {
-    //   await this.auth.update(this.form.fields).then(
-    //     () => {
-    //       this.$router.push('/')
-    //     },
-    //     error => {
-    //       this.message = error
-    //       this.messageType = 'error'
-    //     }
-    //   )
-    // }
-    this.updateLoading = false
+      const updateData = {
+        id: this.auth.userId,
+        data: this.form.fields,
+      }
+
+      await this.account
+        .update(updateData)
+        .then(
+          (response: UpdateUserModel) => {
+            this.form.fields = cloneSource(response)
+          },
+          (error: string) => {
+            this.message = error
+            this.messageType = 'error'
+          }
+        )
+        .finally(() => {
+          this.updateLoading = false
+        })
+    }
   }
 
   async deleteAct() {
     this.deleteLoading = true
-    await this.account.deleteUser(this.auth.userId).then(
-      () => {
-        this.auth.logout()
-        this.$router.push('/')
-      },
-      error => {
-        this.message = error
-        this.messageType = 'error'
-      }
-    )
 
-    this.deleteLoading = false
+    await this.account
+      .delete(this.auth.userId)
+      .then(
+        () => {
+          this.auth.logout()
+          this.$router.push('/')
+        },
+        error => {
+          this.message = error
+          this.messageType = 'error'
+        }
+      )
+      .finally(() => {
+        this.deleteLoading = false
+      })
   }
 }
 </script>

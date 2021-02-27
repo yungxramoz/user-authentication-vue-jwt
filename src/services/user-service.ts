@@ -23,8 +23,8 @@ class UaserService {
       })
   }
 
-  updateUser(id: number, updateData: UpdateUserModel) {
-    return axios.put(`${API_URL}${id}`, { data: updateData, headers: authHeader() })
+  updateUser(id: number, data: UpdateUserModel) {
+    return axios.put(`${API_URL}${id}`, data, { headers: authHeader() })
   }
 
   deleteUser(id: number) {

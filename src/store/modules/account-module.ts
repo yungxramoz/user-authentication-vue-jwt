@@ -2,8 +2,8 @@ import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 
 import UserService from '@/services/user-service'
 
-import UserModel from '@/models/data/UserModel'
-import AccountState from '@/models/state/account-state'
+import { UserModel, UpdateUserModel } from '@/models/data'
+import { AccountState } from '@/models/state/account-state'
 
 import { promiseErrorHandler } from '@/helpers/promise-error-handler'
 
@@ -14,45 +14,68 @@ class AccountModule extends VuexModule {
   }
 
   @Mutation
-  public fetchUserSuccess(user: UserModel): void {
+  public fetchSuccess(user: UserModel): void {
     this.accountState.accountData = user
   }
 
   @Mutation
-  public fetchUserFailure(): void {
+  public fetchFailure(): void {
     this.accountState.accountData = null
   }
 
   @Mutation
-  public deleteUserSuccess(): void {
+  public updateSuccess(user: UpdateUserModel): void {
+    if (this.accountState.accountData) {
+      this.accountState.accountData = Object.assign({}, this.accountState.accountData, user)
+    }
+  }
+
+  @Mutation
+  public updateFailure(): void {}
+
+  @Mutation
+  public deleteSuccess(): void {
     this.accountState.accountData = null
   }
 
   @Mutation
-  public deleteUserFailure(): void {}
+  public deleteFailure(): void {}
 
   @Action({ rawError: true })
-  public fetchUser(id: number): Promise<any> {
+  public fetch(id: number): Promise<any> {
     return UserService.getUser(id).then(
       (user: UserModel) => {
-        this.fetchUserSuccess(user)
+        this.fetchSuccess(user)
         return Promise.resolve(user)
       },
       error => {
-        return promiseErrorHandler(error, this.fetchUserFailure)
+        return promiseErrorHandler(error, this.fetchFailure)
       }
     )
   }
 
   @Action({ rawError: true })
-  public deleteUser(id: number): Promise<any> {
+  public update(updateData: { id: number; data: UpdateUserModel }): Promise<any> {
+    return UserService.updateUser(updateData.id, updateData.data).then(
+      () => {
+        this.updateSuccess(updateData.data)
+        return Promise.resolve(updateData.data)
+      },
+      error => {
+        return promiseErrorHandler(error, this.updateFailure)
+      }
+    )
+  }
+
+  @Action({ rawError: true })
+  public delete(id: number): Promise<any> {
     return UserService.deleteUser(id).then(
       response => {
-        this.deleteUserSuccess()
+        this.deleteSuccess()
         return Promise.resolve(response.data)
       },
       error => {
-        return promiseErrorHandler(error, this.deleteUserFailure)
+        return promiseErrorHandler(error, this.deleteFailure)
       }
     )
   }
