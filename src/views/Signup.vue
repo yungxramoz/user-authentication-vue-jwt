@@ -1,12 +1,10 @@
 <template>
-  <yr-form title="Create new Account">
+  <yr-form title="Create new Account" :message="message" :messageType="messageType">
     <template #form>
-      <v-form ref="signupForm" v-model="form.valid" lazy-validation>
+      <v-form ref="signupForm" v-model="form.valid" lazy-validation :disabled="loading">
         <yr-text-field
           v-model="form.fields.firstname"
-          name="firsname"
           label="Firstname"
-          id="firstname"
           counter="50"
           hint="*required"
           required
@@ -14,9 +12,7 @@
         ></yr-text-field>
         <yr-text-field
           v-model="form.fields.lastname"
-          name="lastname"
           label="Lastname"
-          id="lastname"
           counter="50"
           hint="*required"
           required
@@ -24,9 +20,7 @@
         ></yr-text-field>
         <yr-text-field
           v-model="form.fields.username"
-          name="username"
           label="Username"
-          id="username"
           counter="20"
           hint="*required"
           required
@@ -34,18 +28,14 @@
         ></yr-text-field>
         <yr-password-field
           v-model="form.fields.password"
-          name="password"
           label="Password"
-          id="password"
           no-prepend-icon="true"
           :rules="form.rules.password"
         >
         </yr-password-field>
         <yr-password-field
           v-model="form.fields.confirmPassword"
-          name="confirm-password"
           label="Confirm Password"
-          id="confirm-password"
           no-prepend-icon="true"
           :rules="form.rules.confirmPassword"
         >
@@ -54,7 +44,7 @@
           <yr-btn
             type="submit"
             width="180px"
-            :disabled="!form.valid || loading"
+            :disabled="!form.valid"
             :loading="loading"
             @click="register"
           >

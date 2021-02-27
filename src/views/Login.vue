@@ -1,25 +1,23 @@
 <template>
   <yr-form title="Login" :message="message" :messageType="messageType">
     <template #form>
-      <v-form ref="loginForm" v-model="form.valid" lazy-validation>
+      <v-form ref="loginForm" v-model="form.valid" :disabled="loading">
         <yr-text-field
           v-model="form.fields.username"
           label="Username"
           prepend-icon="mdi-account"
           required
           :rules="form.rules.username"
-          :disabled="loading"
         ></yr-text-field>
         <yr-password-field
           v-model="form.fields.password"
           label="Password"
           required
           :rules="form.rules.password"
-          :disabled="loading"
           @keyup.enter="login"
         ></yr-password-field>
         <div class="text-center">
-          <yr-btn width="180px" @click="login" :loading="loading" :disabled="loading">Login</yr-btn>
+          <yr-btn width="180px" @click="login" :loading="loading">Login</yr-btn>
         </div>
       </v-form>
     </template>

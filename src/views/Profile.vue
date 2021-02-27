@@ -1,7 +1,7 @@
 <template>
-  <yr-form title="Profile">
+  <yr-form title="Profile" :message="message" :messageType="messageType">
     <template #form>
-      <v-form lazy-validation v-model="form.valid">
+      <v-form lazy-validation v-model="form.valid" :disabled="updateLoading || deleteLoading">
         <yr-text-field
           v-model="form.fields.firstname"
           label="Firstname"
@@ -30,7 +30,14 @@
           <v-col class="text-right">
             <v-dialog v-model="deleteDialog" max-width="500px" :persistent="deleteLoading">
               <template v-slot:activator="{ on, attrs }">
-                <yr-btn color="error" class="mr-4" v-bind="attrs" v-on="on">
+                <yr-btn
+                  color="error"
+                  class="mr-4"
+                  v-bind="attrs"
+                  v-on="on"
+                  :disabled="updateLoading || deleteLoading"
+                  :loading="deleteLoading"
+                >
                   Delete Profile
                 </yr-btn>
               </template>
@@ -59,7 +66,7 @@
               </v-card>
             </v-dialog>
 
-            <yr-btn :disabled="!updateEnabled" @click="update" :updateLoading="updateLoading">
+            <yr-btn :disabled="!updateEnabled" @click="update" :loading="updateLoading">
               Update
             </yr-btn>
           </v-col>
@@ -70,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Ref, Vue, Watch } from 'vue-property-decorator'
+import { Component, Ref, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { InputValidationRule } from 'vuetify'
 
@@ -78,7 +85,6 @@ import AuthModule from '@/store/modules/auth-module'
 import AccountModule from '@/store/modules/account-module'
 
 import { maxCharRule, minCharRule, passwordRule, requiredRule } from '@/helpers/form-rules'
-import { cloneSource } from '@/helpers/clone'
 
 import { VForm } from '@/models/types'
 import UpdateUserModel from '@/models/data/UpdateUserModel'
@@ -166,7 +172,7 @@ export default class Registration extends Vue {
     //     }
     //   )
     // }
-    this.updateLoading = false
+    // this.updateLoading = false
   }
 
   async deleteAct() {
