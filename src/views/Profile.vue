@@ -135,17 +135,28 @@ export default class Registration extends Vue {
   private account: AccountModule = getModule(AccountModule, this.$store)
 
   created() {
-    this.account.fetchUser(this.auth.userId)
     this.form.rules = {
       firstname: [requiredRule(), maxCharRule(50)],
       lastname: [requiredRule(), maxCharRule(50)],
       username: [requiredRule(), maxCharRule(20)],
       password: [requiredRule(), minCharRule(8), passwordRule()],
     }
-  }
+    this.updateLoading = true
 
-  get profileData() {
-    return this.account.currentUser as UserModel
+    this.account
+      .fetchUser(this.auth.userId)
+      .then(
+        (response: UserModel) => {
+          this.form.fields = response
+        },
+        error => {
+          this.message = error
+          this.messageType = 'error'
+        }
+      )
+      .finally(() => {
+        this.updateLoading = false
+      })
   }
 
   get updateEnabled(): boolean {
@@ -172,7 +183,7 @@ export default class Registration extends Vue {
     //     }
     //   )
     // }
-    // this.updateLoading = false
+    this.updateLoading = false
   }
 
   async deleteAct() {
