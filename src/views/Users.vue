@@ -1,11 +1,21 @@
 <template>
-  <v-container>
-    <h1>Users</h1>
-    <ul>
-      <li v-for="user in allUsers" :key="user.userId">
-        {{ user.username }}: {{ user.firstname }} {{ user.lastname }}
-      </li>
-    </ul>
+  <v-container pa-6>
+    <div class="text-center mb-5">
+      <h1>Users</h1>
+    </div>
+    <v-row dense>
+      <v-col v-for="user in allUsers" :key="user.userId" cols="12" class="mb-1">
+        <v-card color="info" elevation="3">
+          <div class="d-flex flex-no-wrap justify-space-between">
+            <div>
+              <v-card-title class="headline">{{ user.firstname }} {{ user.lastname }}</v-card-title>
+
+              <v-card-subtitle>Username: {{ user.username }}</v-card-subtitle>
+            </div>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
