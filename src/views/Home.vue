@@ -5,7 +5,7 @@
         <div class="d-flex flex-column justify-space-between align-center mb-5">
           <v-img
             contain
-            lazy-src="../assets/sm.png"
+            lazy-src="../assets/sm-header.png"
             max-height="196"
             max-width="302"
             src="../assets/sm.png"
