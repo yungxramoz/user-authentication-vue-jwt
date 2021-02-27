@@ -1,11 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 
-import AuthenticationModel from '@/models/data/AuthenticateModel'
-import RegistrationModel from '@/models/data/RegistrationModel'
-import UserModel from '@/models/data/UserModel'
+import { UserModel, UpdateUserModel } from '@/models/data'
 
 import authHeader from './auth-header'
-import UpdateUserModel from '@/models/data/UpdateUserModel'
 
 const API_URL = 'https://localhost:44319/api/user/'
 

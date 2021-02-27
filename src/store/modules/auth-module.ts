@@ -2,9 +2,7 @@ import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 
 import AuthService from '@/services/auth-service'
 
-import AuthenticationModel from '@/models/data/AuthenticateModel'
-import UserModel from '@/models/data/UserModel'
-import RegistrationModel from '@/models/data/RegistrationModel'
+import { AuthenticationModel, UserModel, RegistrationModel } from '@/models/data'
 import { AuthState } from '@/models/state/auth-state'
 
 import { promiseErrorHandler } from '@/helpers/promise-error-handler'

@@ -1,5 +1,3 @@
-import UserModel from '@/models/data/UserModel'
-
 export default function authHeader() {
   const storedAccessToken = localStorage.getItem('accessToken')
   let accessToken = JSON.parse(storedAccessToken ? storedAccessToken : '') as string

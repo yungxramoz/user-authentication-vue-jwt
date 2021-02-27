@@ -43,13 +43,13 @@ import { requiredRule } from '@/helpers/form-rules'
 
 import { VForm } from '@/models/types'
 import FormDefinition from '@/models/form-definition'
-import AuthenticateModel from '@/models/data/AuthenticateModel'
+import { AuthenticationModel } from '@/models/data'
 
 import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
 
 interface Form extends FormDefinition {
   valid: false
-  fields: AuthenticateModel
+  fields: AuthenticationModel
   rules?: {
     username: InputValidationRule[]
     password: InputValidationRule[]
@@ -72,7 +72,7 @@ export default class Login extends Vue {
     fields: {
       username: '',
       password: '',
-    } as AuthenticateModel,
+    } as AuthenticationModel,
     rules: {
       username: [requiredRule()],
       password: [requiredRule()],

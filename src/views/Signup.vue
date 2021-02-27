@@ -74,7 +74,7 @@ import AuthModule from '@/store/modules/auth-module'
 import { maxCharRule, minCharRule, passwordRule, requiredRule } from '@/helpers/form-rules'
 
 import { VForm } from '@/models/types'
-import RegistrationModel from '@/models/data/RegistrationModel'
+import { RegistrationModel } from '@/models/data'
 import FormDefinition from '@/models/form-definition'
 
 import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'

@@ -25,7 +25,7 @@ import { getModule } from 'vuex-module-decorators'
 
 import UserModule from '@/store/modules/user-module'
 
-import UserModel from '@/models/data/UserModel'
+import { UserModel } from '@/models/data'
 
 @Component
 export default class Login extends Vue {

@@ -2,7 +2,7 @@ import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 
 import UserService from '@/services/user-service'
 
-import UserModel from '@/models/data/UserModel'
+import { UserModel } from '@/models/data'
 
 @Module({ namespaced: true, name: 'user' })
 class UserModule extends VuexModule {
