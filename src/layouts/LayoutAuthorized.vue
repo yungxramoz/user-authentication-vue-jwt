@@ -31,7 +31,7 @@
     </v-main>
 
     <v-footer app class="pa-0">
-      <v-bottom-navigation shift>
+      <v-bottom-navigation shift color="secondary darken-1">
         <v-btn to="users">
           <span>Users</span>
           <v-icon>mdi-account-group</v-icon>
