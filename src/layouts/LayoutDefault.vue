@@ -12,13 +12,16 @@
           <template v-slot:placeholder>
             <v-row class="fill-height ma-0" align="center" justify="center">
               <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-            </v-row> </template
-        ></v-img>
+            </v-row>
+          </template>
+        </v-img>
       </router-link>
       <v-spacer></v-spacer>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
-          <yr-icon-btn v-bind="attrs" v-on="on" to="/login">mdi-login</yr-icon-btn>
+          <yr-icon-btn v-bind="attrs" v-on="on" to="/login" data-cy="to-login-btn">
+            mdi-login
+          </yr-icon-btn>
         </template>
         <span>Login</span>
       </v-tooltip>

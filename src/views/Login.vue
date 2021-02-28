@@ -8,6 +8,7 @@
           prepend-icon="mdi-account"
           required
           :rules="form.rules.username"
+          data-cy="username-input"
         ></yr-text-field>
         <yr-password-field
           v-model="form.fields.password"
@@ -15,9 +16,10 @@
           required
           :rules="form.rules.password"
           @keyup.enter="login"
+          data-cy="password-input"
         ></yr-password-field>
         <div class="text-center">
-          <yr-btn width="180px" @click="login" :loading="loading">Login</yr-btn>
+          <yr-btn width="180px" @click="login" :loading="loading" data-cy="login-btn">Login</yr-btn>
         </div>
       </v-form>
     </template>
