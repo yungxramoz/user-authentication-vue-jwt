@@ -14,6 +14,10 @@ npm install --global yarn
 
 ## Projekt setup
 
+### UserAuthentication API starten
+
+Mittels Visual Studio 2019 die neuste Version von yungxramoz/UserAuthentication starten. Der Endpoint der genutzt wird prüfen den der muss ggf. in der Web-App angepasst werden.
+
 ### API Endpoint konfigurieren
 
 Die API URL wird momentan noch nicht zentral verwaltet, wodurch die Endpoints in zwei Dateien angepasst werden müssen. Die anzupassende Variable heisst `API_URL`.
