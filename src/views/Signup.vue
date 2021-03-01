@@ -38,16 +38,11 @@
           label="Confirm Password"
           no-prepend-icon="true"
           :rules="form.rules.confirmPassword"
+          @enter="register"
         >
         </yr-password-field>
         <div class="text-center">
-          <yr-btn
-            type="submit"
-            width="180px"
-            :disabled="!form.valid"
-            :loading="loading"
-            @click="register"
-          >
+          <yr-btn width="180px" :disabled="!form.valid" :loading="loading" @click="register">
             Sign up
           </yr-btn>
         </div>
@@ -136,21 +131,23 @@ export default class Signup extends Vue {
   }
 
   async register() {
-    this.loading = true
-
     if (this.signupForm.validate()) {
-      await this.auth.register(this.form.fields).then(
-        () => {
-          this.$router.push('/users')
-          return
-        },
-        error => {
-          this.message = error
-          this.messageType = 'error'
-        }
-      )
+      this.loading = true
+      await this.auth
+        .register(this.form.fields)
+        .then(
+          () => {
+            this.$router.push('/users')
+          },
+          error => {
+            this.message = error
+            this.messageType = 'error'
+          }
+        )
+        .finally(() => {
+          this.loading = false
+        })
     }
-    this.loading = false
   }
 }
 </script>
