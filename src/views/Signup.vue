@@ -42,7 +42,7 @@
         >
         </yr-password-field>
         <div class="text-center">
-          <yr-btn width="180px" :disabled="!form.valid" :loading="loading" @click="register">
+          <yr-btn width="180px" :disabled="!form.valid" :loading="loading" @keyup.enter="register">
             Sign up
           </yr-btn>
         </div>
