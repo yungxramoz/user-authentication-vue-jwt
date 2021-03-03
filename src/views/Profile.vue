@@ -123,7 +123,7 @@ interface Form extends FormDefinition {
   },
 })
 export default class Profile extends Vue {
-  @Ref('profileForm') readonly profileForm!: VForm
+  @Ref() readonly profileForm!: VForm
 
   private form: Form = {
     valid: false,

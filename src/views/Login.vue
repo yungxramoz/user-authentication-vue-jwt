@@ -67,7 +67,7 @@ interface Form extends FormDefinition {
   },
 })
 export default class Login extends Vue {
-  @Ref('loginForm') readonly loginForm!: VForm
+  @Ref() readonly loginForm!: VForm
 
   private form: Form = {
     valid: false,
