@@ -31,16 +31,14 @@
           label="Password"
           no-prepend-icon="true"
           :rules="form.rules.password"
-        >
-        </yr-password-field>
+        ></yr-password-field>
         <yr-password-field
           v-model="form.fields.confirmPassword"
           label="Confirm Password"
           no-prepend-icon="true"
           :rules="form.rules.confirmPassword"
           @enter="register"
-        >
-        </yr-password-field>
+        ></yr-password-field>
         <div class="text-center">
           <yr-btn width="180px" :disabled="!form.valid" :loading="loading" @keyup.enter="register">
             Sign up

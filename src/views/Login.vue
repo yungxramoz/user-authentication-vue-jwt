@@ -25,8 +25,9 @@
             :loading="loading"
             :disabled="loading"
             data-cy="login-btn"
-            >Login</yr-btn
           >
+            Login
+          </yr-btn>
         </div>
       </v-form>
     </template>
