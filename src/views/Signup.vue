@@ -133,6 +133,7 @@ export default class Signup extends Vue {
   async register() {
     if (this.signupForm.validate()) {
       this.loading = true
+      this.message = ''
       await this.auth
         .register(this.form.fields)
         .then(

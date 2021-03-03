@@ -182,13 +182,14 @@ export default class Profile extends Vue {
   async update() {
     if (this.profileForm.validate()) {
       this.updateLoading = true
+      this.message = ''
 
       const updateData = {
         id: this.auth.userId,
         data: this.form.fields,
       }
 
-      await this.account
+      this.account
         .update(updateData)
         .then(
           (response: UpdateUserModel) => {

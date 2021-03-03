@@ -86,20 +86,24 @@ export default class Login extends Vue {
   private auth: AuthModule = getModule(AuthModule, this.$store)
 
   async login() {
-    this.loading = true
-
     if (this.loginForm.validate()) {
-      await this.auth.login(this.form.fields).then(
-        () => {
-          this.$router.push('/users')
-        },
-        error => {
-          this.message = error
-          this.messageType = 'error'
-        }
-      )
+      this.loading = true
+      this.message = ''
+      await this.auth
+        .login(this.form.fields)
+        .then(
+          () => {
+            this.$router.push('/users')
+          },
+          error => {
+            this.message = error
+            this.messageType = 'error'
+          }
+        )
+        .finally(() => {
+          this.loading = false
+        })
     }
-    this.loading = false
   }
 }
 </script>
