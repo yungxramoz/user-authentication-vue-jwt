@@ -16,7 +16,7 @@
     </div>
 
     <v-bottom-sheet :value="hasMessage" hide-overlay
-      ><v-alert class="ma-0 pa-7" border="top" :type="messageType" prominent>
+      ><v-alert class="ma-0 pa-6" border="top" :type="messageType" prominent>
         {{ message }}
       </v-alert>
     </v-bottom-sheet>
