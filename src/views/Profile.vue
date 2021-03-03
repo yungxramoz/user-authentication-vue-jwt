@@ -208,8 +208,9 @@ export default class Profile extends Vue {
 
   async deleteAct() {
     this.deleteLoading = true
+    this.message = ''
 
-    await this.account
+    this.account
       .delete(this.auth.userId)
       .then(
         () => {
