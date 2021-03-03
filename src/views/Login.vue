@@ -19,7 +19,14 @@
           data-cy="password-input"
         ></yr-password-field>
         <div class="text-center">
-          <yr-btn width="180px" @click="login" :loading="loading" data-cy="login-btn">Login</yr-btn>
+          <yr-btn
+            width="180px"
+            @click="login"
+            :loading="loading"
+            :disabled="loading"
+            data-cy="login-btn"
+            >Login</yr-btn
+          >
         </div>
       </v-form>
     </template>
