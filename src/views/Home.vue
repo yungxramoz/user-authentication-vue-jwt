@@ -7,8 +7,8 @@
             contain
             lazy-src="../assets/sm-header.png"
             src="../assets/sm.png"
-            max-height="300"
-            max-width="300"
+            max-height="250"
+            max-width="250"
             class="mx-auto"
           >
             <template v-slot:placeholder>
@@ -19,7 +19,7 @@
           </v-img>
         </v-col>
         <v-col cols="12" class="mt-6">
-          <p class="text-h5 text-uppercase font-weight-light text-center text-no-wrap">
+          <p class="text-body-1 text-uppercase font-weight-light text-center text-no-wrap">
             Plan - Collect - Organize - Play
           </p>
         </v-col>
