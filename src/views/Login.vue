@@ -55,7 +55,7 @@ import { VForm } from '@/models/types'
 import FormDefinition from '@/models/form-definition'
 import { AuthenticationModel } from '@/models/data'
 
-import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
+import { YrForm } from '@/components'
 
 interface Form extends FormDefinition {
   valid: false
@@ -68,9 +68,6 @@ interface Form extends FormDefinition {
 
 @Component({
   components: {
-    YrBtn,
-    YrTextField,
-    YrPasswordField,
     YrForm,
   },
 })

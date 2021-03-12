@@ -35,7 +35,7 @@
 
     <v-footer app>
       <v-spacer></v-spacer>
-      <v-subheader> &copy; {{ new Date().getFullYear() }} Sandro Gerber </v-subheader>
+      <v-subheader> &copy; {{ new Date().getFullYear() }} Session Master </v-subheader>
     </v-footer>
   </div>
 </template>

@@ -101,7 +101,7 @@ import { VForm } from '@/models/types'
 import { UpdateUserModel, UserModel } from '@/models/data'
 import FormDefinition from '@/models/form-definition'
 
-import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
+import { YrForm } from '@/components'
 
 interface Form extends FormDefinition {
   valid: false
@@ -116,9 +116,6 @@ interface Form extends FormDefinition {
 
 @Component({
   components: {
-    YrBtn,
-    YrTextField,
-    YrPasswordField,
     YrForm,
   },
 })

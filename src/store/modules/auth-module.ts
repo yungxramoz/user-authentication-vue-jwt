@@ -7,14 +7,11 @@ import { AuthState } from '@/models/state/auth-state'
 
 import { promiseErrorHandler } from '@/helpers/promise-error-handler'
 
-const storedUser = localStorage.getItem('user')
 const userId = localStorage.getItem('userId')
 const accessToken = localStorage.getItem('accessToken')
 
 @Module({ namespaced: true, name: 'auth' })
 class AuthModule extends VuexModule {
-  public user: UserModel | null = storedUser ? JSON.parse(storedUser) : null
-
   public authState: AuthState = {
     loggedIn: accessToken && userId ? true : false,
     userId: userId ? JSON.parse(userId) : null,
