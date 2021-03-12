@@ -20,7 +20,7 @@
         </v-col>
         <v-col cols="12" class="mt-6">
           <p class="text-body-1 text-uppercase font-weight-light text-center text-no-wrap">
-            Plan - Collect - Organize - Play
+            Collect - Plan - Organize - Play
           </p>
         </v-col>
       </v-row>
