@@ -8,6 +8,7 @@ import { getModule } from 'vuex-module-decorators'
 import Home from '@/views/Home.vue'
 import Signup from '@/views/Signup.vue'
 import Login from '@/views/Login.vue'
+import NotFound from '@/views/NotFound.vue'
 
 let auth: AuthModule = getModule(AuthModule, store)
 
@@ -50,6 +51,19 @@ const routes: Array<RouteConfig> = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path: '/',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
   },
 ]
 
