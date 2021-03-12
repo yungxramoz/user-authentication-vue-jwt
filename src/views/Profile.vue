@@ -51,14 +51,17 @@
                   Delete Profile
                 </yr-btn>
               </template>
-              <v-card>
-                <v-card-title class="headline">
+
+              <yr-dialog-card>
+                <template #title>
                   Delete Action
-                </v-card-title>
-                <v-card-text>
+                </template>
+
+                <template #content>
                   Are you sure you want to delete Your Profile?
-                </v-card-text>
-                <v-card-actions>
+                </template>
+
+                <template #actions>
                   <v-spacer></v-spacer>
                   <yr-btn text :disabled="deleteLoading" @click="deleteDialog = false">
                     Cancel
@@ -72,8 +75,8 @@
                   >
                     Delete
                   </yr-btn>
-                </v-card-actions>
-              </v-card>
+                </template>
+              </yr-dialog-card>
             </v-dialog>
 
             <yr-btn :disabled="!updateEnabled" :loading="updateLoading" @click="update">
