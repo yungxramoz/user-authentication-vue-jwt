@@ -40,7 +40,13 @@
           @enter="register"
         ></yr-password-field>
         <div class="text-center">
-          <yr-btn width="180px" :disabled="!form.valid" :loading="loading" @keyup.enter="register">
+          <yr-btn
+            width="180px"
+            :disabled="!form.valid"
+            :loading="loading"
+            @keyup.enter="register"
+            @click="register"
+          >
             Sign up
           </yr-btn>
         </div>
