@@ -32,12 +32,5 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Home extends Vue {
-  get textStyle(): string {
-    let style = 'text-overline'
-    return this.$vuetify.breakpoint.xs || this.$vuetify.breakpoint.sm
-      ? `${style} text-center`
-      : `${style} mt-9`
-  }
-}
+export default class Home extends Vue {}
 </script>
