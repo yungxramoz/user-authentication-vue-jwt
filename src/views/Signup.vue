@@ -42,7 +42,7 @@
         <div class="text-center">
           <yr-btn
             width="180px"
-            :disabled="!form.valid"
+            :disabled="!form.valid || loading"
             :loading="loading"
             @keyup.enter="register"
             @click="register"

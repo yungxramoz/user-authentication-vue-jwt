@@ -45,8 +45,7 @@
                   class="mr-4"
                   v-bind="attrs"
                   v-on="on"
-                  :disabled="updateLoading || deleteLoading"
-                  :loading="deleteLoading"
+                  :disabled="updateLoading"
                 >
                   Delete Profile
                 </yr-btn>
