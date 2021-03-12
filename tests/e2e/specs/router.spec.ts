@@ -7,7 +7,9 @@ describe('Authentification', () => {
     cy.get('[data-cy="username-input"]').type('cytest')
     cy.get('[data-cy="password-input"]').type('cytest')
     cy.get('[data-cy="login-btn"]').click()
-    cy.location('pathname').should('eq', '/users')
+
+    //we have to wait because here data have to be fetched from the api
+    cy.location('pathname', { timeout: 60000 }).should('eq', '/users')
 
     cy.get('[data-cy="to-logout-btn"]').click()
     cy.location('pathname').should('eq', '/')
