@@ -18,7 +18,9 @@
       <v-spacer></v-spacer>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
-          <yr-icon-btn v-bind="attrs" v-on="on" @click="logout">mdi-logout</yr-icon-btn>
+          <yr-icon-btn v-bind="attrs" v-on="on" @click="logout" data-cy="to-logout-btn"
+            >mdi-logout</yr-icon-btn
+          >
         </template>
         <span>Logout</span>
       </v-tooltip>
