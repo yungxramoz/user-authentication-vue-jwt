@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 
 import { AuthenticationModel, RegistrationModel, UserModel } from '@/models/data'
 
-const API_URL = 'https://localhost:44319/api/user/'
+const API_URL = 'https://sessionmaster-appservice.azurewebsites.net/api/User/'
 
 class AuthService {
   login(authData: AuthenticationModel): Promise<UserModel> {

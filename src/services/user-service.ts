@@ -4,7 +4,7 @@ import { UserModel, UpdateUserModel } from '@/models/data'
 
 import authHeader from './auth-header'
 
-const API_URL = 'https://localhost:44319/api/user/'
+const API_URL = 'https://sessionmaster-appservice.azurewebsites.net/api/User/'
 
 class UaserService {
   getUsers(): Promise<UserModel[]> {
