@@ -108,7 +108,7 @@ export default class LayoutDefault extends Vue {
       this.auth.logout()
       this.$router.push('/')
       this.logoutLoading = false
-    }, 2000)
+    }, 1500)
   }
 }
 </script>
