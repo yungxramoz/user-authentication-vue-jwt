@@ -3,19 +3,12 @@
     <div class="text-center mb-5">
       <h1>Users</h1>
     </div>
-    <v-row dense>
-      <v-col v-for="user in allUsers" :key="user.userId" cols="12" class="mb-1">
-        <v-card color="info" elevation="3">
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <v-card-title class="headline">{{ user.firstname }} {{ user.lastname }}</v-card-title>
-
-              <v-card-subtitle>Username: {{ user.username }}</v-card-subtitle>
-            </div>
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
+    <v-data-table
+      :headers="headers"
+      :items="allUsers"
+      :search="search"
+      :item-key="username"
+    ></v-data-table>
   </v-container>
 </template>
 
@@ -26,10 +19,28 @@ import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/store/modules/user-module'
 
 import { UserModel } from '@/models/data'
+import { DataTableHeader } from 'vuetify'
 
 @Component
 export default class Login extends Vue {
   private users: UserModule = getModule(UserModule, this.$store)
+  private search = ''
+  private headers: DataTableHeader[] = [
+    {
+      text: 'Firstname',
+      align: 'start',
+      filterable: true,
+      sortable: true,
+      value: 'firstname',
+    },
+    {
+      text: 'Lastname',
+      align: 'start',
+      filterable: true,
+      sortable: true,
+      value: 'lastname',
+    },
+  ]
 
   mounted() {
     this.users.fetchUsers()
