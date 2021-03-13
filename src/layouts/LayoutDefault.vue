@@ -33,7 +33,7 @@
       </v-container>
     </v-main>
 
-    <v-footer app outlined class="pa-1">
+    <v-footer app class="pa-1" elevation="5">
       <v-spacer></v-spacer>
       <v-subheader class="text--secondary">
         &copy; {{ new Date().getFullYear() }} Session Master
