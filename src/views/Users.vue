@@ -1,5 +1,5 @@
 <template>
-  <v-container pa-6>
+  <v-container px-6 py-3>
     <div class="text-center mb-5">
       <h1>Users</h1>
     </div>
