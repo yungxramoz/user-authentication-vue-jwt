@@ -5,15 +5,15 @@
     </div>
     <v-data-table
       :headers="headers"
-      :items="allUsers"
+      :items="userList"
       :search="search"
-      :item-key="username"
+      :loading="loading"
     ></v-data-table>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Watch, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 
 import UserModule from '@/store/modules/user-module'
@@ -24,6 +24,7 @@ import { DataTableHeader } from 'vuetify'
 @Component
 export default class Login extends Vue {
   private users: UserModule = getModule(UserModule, this.$store)
+  private userList: UserModel[] = []
   private search = ''
   private headers: DataTableHeader[] = [
     {
@@ -41,12 +42,32 @@ export default class Login extends Vue {
       value: 'lastname',
     },
   ]
+  private loading = false
 
-  mounted() {
-    this.users.fetchUsers()
+  beforeMount() {
+    this.loading = true
+    this.users
+      .fetchUsers()
+      .then(
+        (users: UserModel[]) => {
+          this.userList = users
+          console.log(this.userList)
+        },
+        _error => {
+          //TODO do proper error handling
+        }
+      )
+      .finally(() => {
+        this.loading = false
+      })
   }
 
-  get allUsers(): UserModel[] {
+  @Watch('storeUsers')
+  onStoreUsersChanged(newUserList: UserModel[]) {
+    this.userList = newUserList
+  }
+
+  get storeUsers(): UserModel[] {
     return this.users.all
   }
 }
