@@ -35,9 +35,7 @@
 
     <v-footer app class="pa-1" elevation="5">
       <v-spacer></v-spacer>
-      <v-subheader class="text--secondary">
-        &copy; {{ new Date().getFullYear() }} Session Master
-      </v-subheader>
+      <v-subheader> &copy; {{ new Date().getFullYear() }} Session Master </v-subheader>
     </v-footer>
   </div>
 </template>
