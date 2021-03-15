@@ -44,7 +44,7 @@ export default class Login extends Vue {
   ]
   private loading = false
 
-  beforeMount() {
+  mounted() {
     this.loading = true
     this.users
       .fetchUsers()
