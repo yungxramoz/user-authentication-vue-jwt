@@ -25,7 +25,7 @@
               <yr-icon-btn
                 v-bind="{ ...dialogAttrs, ...tooltipAttrs }"
                 v-on="{ ...dialogOn, ...tooltipOn }"
-                data-cy="to-logout-btn"
+                data-cy="logout-btn"
               >
                 mdi-logout
               </yr-icon-btn>
@@ -45,10 +45,21 @@
 
           <template #actions>
             <v-spacer></v-spacer>
-            <yr-btn text :disabled="logoutLoading" @click="logoutDialog = false">
+            <yr-btn
+              data-cy="cancel-logout-btn"
+              text
+              :disabled="logoutLoading"
+              @click="logoutDialog = false"
+            >
               Cancel
             </yr-btn>
-            <yr-btn text :disabled="logoutLoading" :loading="logoutLoading" @click="logout">
+            <yr-btn
+              data-cy="to-logout-btn"
+              text
+              :disabled="logoutLoading"
+              :loading="logoutLoading"
+              @click="logout"
+            >
               Logout
             </yr-btn>
           </template>
