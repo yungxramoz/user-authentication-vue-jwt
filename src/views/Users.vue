@@ -51,7 +51,6 @@ export default class Login extends Vue {
       .then(
         (users: UserModel[]) => {
           this.userList = users
-          console.log(this.userList)
         },
         _error => {
           //TODO do proper error handling
