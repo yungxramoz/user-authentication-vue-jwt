@@ -8,10 +8,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
+        
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          browser: chrome
-          start: yarn test:e2e
+          build: yarn build
+          start: yarn serve
+          wait-on: 'http://localhost:8080'
+          spec: "tests/e2e/**/*"          
+        env:
+          CYPRESS_baseUrl: http://localhost:8080/
