@@ -1,30 +1,29 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col class="text-center mt-5">
-        <div class="d-flex flex-column justify-space-between align-center mb-5">
+    <v-row align="center" justify="center" style="height:70vh;">
+      <v-row>
+        <v-col cols="12">
           <v-img
             contain
             lazy-src="../assets/sm-header.png"
-            max-height="196"
-            max-width="302"
             src="../assets/sm.png"
+            max-height="250"
+            max-width="250"
+            class="mx-auto"
           >
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-              </v-row> </template
-          ></v-img>
-        </div>
-        <blockquote class="blockquote">
-          &#8220;First, solve the problem. Then, write the code.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;John Johnson</em>
-            </small>
-          </footer>
-        </blockquote>
-      </v-col>
+              </v-row>
+            </template>
+          </v-img>
+        </v-col>
+        <v-col cols="12" class="mt-6">
+          <p class="text-body-1 text-uppercase font-weight-light text-center text-no-wrap">
+            Collect - Plan - Organize - Play
+          </p>
+        </v-col>
+      </v-row>
     </v-row>
   </v-container>
 </template>

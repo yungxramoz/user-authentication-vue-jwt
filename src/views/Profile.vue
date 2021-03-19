@@ -45,20 +45,22 @@
                   class="mr-4"
                   v-bind="attrs"
                   v-on="on"
-                  :disabled="updateLoading || deleteLoading"
-                  :loading="deleteLoading"
+                  :disabled="updateLoading"
                 >
                   Delete Profile
                 </yr-btn>
               </template>
-              <v-card>
-                <v-card-title class="headline">
+
+              <yr-dialog-card>
+                <template #title>
                   Delete Action
-                </v-card-title>
-                <v-card-text>
+                </template>
+
+                <template #content>
                   Are you sure you want to delete Your Profile?
-                </v-card-text>
-                <v-card-actions>
+                </template>
+
+                <template #actions>
                   <v-spacer></v-spacer>
                   <yr-btn text :disabled="deleteLoading" @click="deleteDialog = false">
                     Cancel
@@ -72,8 +74,8 @@
                   >
                     Delete
                   </yr-btn>
-                </v-card-actions>
-              </v-card>
+                </template>
+              </yr-dialog-card>
             </v-dialog>
 
             <yr-btn :disabled="!updateEnabled" :loading="updateLoading" @click="update">
@@ -101,7 +103,7 @@ import { VForm } from '@/models/types'
 import { UpdateUserModel, UserModel } from '@/models/data'
 import FormDefinition from '@/models/form-definition'
 
-import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
+import { YrForm } from '@/components'
 
 interface Form extends FormDefinition {
   valid: false
@@ -116,9 +118,6 @@ interface Form extends FormDefinition {
 
 @Component({
   components: {
-    YrBtn,
-    YrTextField,
-    YrPasswordField,
     YrForm,
   },
 })

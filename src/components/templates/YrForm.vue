@@ -1,5 +1,5 @@
 <template>
-  <v-container pa-6>
+  <v-container px-6 py-3>
     <div class="text-center">
       <h1 class="mb-5">{{ title }}</h1>
     </div>

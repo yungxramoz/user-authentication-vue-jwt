@@ -33,9 +33,9 @@
       </v-container>
     </v-main>
 
-    <v-footer app>
+    <v-footer app class="pa-1" elevation="5">
       <v-spacer></v-spacer>
-      <v-subheader> &copy; {{ new Date().getFullYear() }} Sandro Gerber </v-subheader>
+      <v-subheader> &copy; {{ new Date().getFullYear() }} Session Master </v-subheader>
     </v-footer>
   </div>
 </template>

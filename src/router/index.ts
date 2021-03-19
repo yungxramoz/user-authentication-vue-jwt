@@ -8,6 +8,7 @@ import { getModule } from 'vuex-module-decorators'
 import Home from '@/views/Home.vue'
 import Signup from '@/views/Signup.vue'
 import Login from '@/views/Login.vue'
+import NotFound from '@/views/NotFound.vue'
 
 let auth: AuthModule = getModule(AuthModule, store)
 
@@ -51,11 +52,19 @@ const routes: Array<RouteConfig> = [
       requiresAuth: true,
     },
   },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   routes,
+  scrollBehavior(to, _from, _savedPosition) {
+    return { x: 0, y: 0, behavior: 'smooth' }
+  },
 })
 
 router.beforeEach((to, _from, next) => {

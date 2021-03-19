@@ -31,18 +31,22 @@
           label="Password"
           no-prepend-icon="true"
           :rules="form.rules.password"
-        >
-        </yr-password-field>
+        ></yr-password-field>
         <yr-password-field
           v-model="form.fields.confirmPassword"
           label="Confirm Password"
           no-prepend-icon="true"
           :rules="form.rules.confirmPassword"
           @enter="register"
-        >
-        </yr-password-field>
+        ></yr-password-field>
         <div class="text-center">
-          <yr-btn width="180px" :disabled="!form.valid" :loading="loading" @keyup.enter="register">
+          <yr-btn
+            width="180px"
+            :disabled="!form.valid || loading"
+            :loading="loading"
+            @keyup.enter="register"
+            @click="register"
+          >
             Sign up
           </yr-btn>
         </div>
@@ -72,7 +76,7 @@ import { VForm } from '@/models/types'
 import { RegistrationModel } from '@/models/data'
 import FormDefinition from '@/models/form-definition'
 
-import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
+import { YrForm } from '@/components'
 
 interface Form extends FormDefinition {
   valid: false
@@ -90,9 +94,6 @@ interface Form extends FormDefinition {
 
 @Component({
   components: {
-    YrBtn,
-    YrTextField,
-    YrPasswordField,
     YrForm,
   },
 })

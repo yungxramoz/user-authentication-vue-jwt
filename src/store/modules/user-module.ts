@@ -4,6 +4,8 @@ import UserService from '@/services/user-service'
 
 import { UserModel } from '@/models/data'
 
+import { promiseErrorHandler } from '@/helpers/promise-error-handler'
+
 @Module({ namespaced: true, name: 'user' })
 class UserModule extends VuexModule {
   public users: UserModel[] | null = null
@@ -26,13 +28,7 @@ class UserModule extends VuexModule {
         return Promise.resolve(users)
       },
       error => {
-        this.fetchUsersFailure()
-        const message =
-          (error.response && error.response.data && error.response.data.message) ||
-          error.message ||
-          error.toString()
-
-        return Promise.reject(message)
+        return promiseErrorHandler(error, this.fetchUsersFailure)
       }
     )
   }

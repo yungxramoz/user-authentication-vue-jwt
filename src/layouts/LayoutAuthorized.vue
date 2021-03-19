@@ -12,16 +12,59 @@
           <template v-slot:placeholder>
             <v-row class="fill-height ma-0" align="center" justify="center">
               <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-            </v-row> </template
-        ></v-img>
+            </v-row>
+          </template>
+        </v-img>
       </router-link>
       <v-spacer></v-spacer>
-      <v-tooltip left>
-        <template v-slot:activator="{ on, attrs }">
-          <yr-icon-btn v-bind="attrs" v-on="on" @click="logout">mdi-logout</yr-icon-btn>
+
+      <v-dialog v-model="logoutDialog" max-width="500px" :persistent="logoutLoading" retain-focus>
+        <template v-slot:activator="{ on: dialogOn, attrs: dialogAttrs }">
+          <v-tooltip left>
+            <template v-slot:activator="{ on: tooltipOn, attrs: tooltipAttrs }">
+              <yr-icon-btn
+                v-bind="{ ...dialogAttrs, ...tooltipAttrs }"
+                v-on="{ ...dialogOn, ...tooltipOn }"
+                data-cy="logout-btn"
+              >
+                mdi-logout
+              </yr-icon-btn>
+            </template>
+            <span>Logout</span>
+          </v-tooltip>
         </template>
-        <span>Logout</span>
-      </v-tooltip>
+
+        <yr-dialog-card>
+          <template #title>
+            Logout
+          </template>
+
+          <template #content>
+            Are you sure you want to log out?
+          </template>
+
+          <template #actions>
+            <v-spacer></v-spacer>
+            <yr-btn
+              data-cy="cancel-logout-btn"
+              text
+              :disabled="logoutLoading"
+              @click="logoutDialog = false"
+            >
+              Cancel
+            </yr-btn>
+            <yr-btn
+              data-cy="to-logout-btn"
+              text
+              :disabled="logoutLoading"
+              :loading="logoutLoading"
+              @click="logout"
+            >
+              Logout
+            </yr-btn>
+          </template>
+        </yr-dialog-card>
+      </v-dialog>
     </yr-app-bar>
 
     <v-main>
@@ -51,16 +94,17 @@ import { getModule } from 'vuex-module-decorators'
 
 import AuthModule from '@/store/modules/auth-module'
 
-import { YrAppBar, YrIconBtn } from '@/components'
+import { YrAppBar } from '@/components'
 
 @Component({
   components: {
     YrAppBar,
-    YrIconBtn,
   },
 })
 export default class LayoutDefault extends Vue {
   private auth: AuthModule
+  private logoutLoading = false
+  private logoutDialog = false
 
   constructor() {
     super()
@@ -68,8 +112,14 @@ export default class LayoutDefault extends Vue {
   }
 
   logout() {
-    this.auth.logout()
-    this.$router.push('/')
+    this.logoutLoading = true
+
+    //fake loading
+    setTimeout(() => {
+      this.auth.logout()
+      this.$router.push('/')
+      this.logoutLoading = false
+    }, 1500)
   }
 }
 </script>

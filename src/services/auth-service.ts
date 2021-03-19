@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 
 import { AuthenticationModel, RegistrationModel, UserModel } from '@/models/data'
 
-const API_URL = 'https://localhost:44319/api/user/'
+const API_URL = 'https://sessionmaster-appservice.azurewebsites.net/api/User/'
 
 class AuthService {
   login(authData: AuthenticationModel): Promise<UserModel> {
@@ -10,7 +10,6 @@ class AuthService {
       .post(API_URL + 'authenticate', authData)
       .then((response: AxiosResponse<UserModel>) => {
         if (response.data.token) {
-          localStorage.setItem('user', JSON.stringify(response.data))
           localStorage.setItem('userId', JSON.stringify(response.data.userId))
           localStorage.setItem('accessToken', JSON.stringify(response.data.token))
         }
@@ -20,7 +19,6 @@ class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('user')
     localStorage.removeItem('userId')
     localStorage.removeItem('accessToken')
   }

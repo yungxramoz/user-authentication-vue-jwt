@@ -19,7 +19,15 @@
           data-cy="password-input"
         ></yr-password-field>
         <div class="text-center">
-          <yr-btn width="180px" @click="login" :loading="loading" data-cy="login-btn">Login</yr-btn>
+          <yr-btn
+            width="180px"
+            @click="login"
+            :loading="loading"
+            :disabled="loading"
+            data-cy="login-btn"
+          >
+            Login
+          </yr-btn>
         </div>
       </v-form>
     </template>
@@ -47,7 +55,7 @@ import { VForm } from '@/models/types'
 import FormDefinition from '@/models/form-definition'
 import { AuthenticationModel } from '@/models/data'
 
-import { YrBtn, YrTextField, YrPasswordField, YrForm } from '@/components'
+import { YrForm } from '@/components'
 
 interface Form extends FormDefinition {
   valid: false
@@ -60,9 +68,6 @@ interface Form extends FormDefinition {
 
 @Component({
   components: {
-    YrBtn,
-    YrTextField,
-    YrPasswordField,
     YrForm,
   },
 })
